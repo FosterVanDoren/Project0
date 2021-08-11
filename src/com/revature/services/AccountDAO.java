@@ -11,6 +11,6 @@ public interface AccountDAO {
     void withdraw(int accountId, double amount, double balance) throws SQLException;
     void deposit(int accountId, double amount) throws SQLException;
     Account getInfoForTransfer(Account account) throws SQLException;
-    void transfer(Account firstAccount, Account secondAccount);
+    void transfer(Account firstAccount, Account secondAccount) throws SQLException;
     void acceptTransfer(Account account);
 }

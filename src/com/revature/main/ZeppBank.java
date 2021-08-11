@@ -83,10 +83,10 @@ public class ZeppBank {
                                 account = accountDAO.viewBalance(id);
 
                                 System.out.println("Account ID: " + account.getAccountNumber() + ", Account Type: " + account.getAccountType() + ", Balance : $" + account.getBalance()
-                                        + ", Date Opened: " + account.getOpeningDate() + " Approved status: " + account.getActive());
+                                        + ", Date Opened: " + account.getOpeningDate() + ", Approval status: " + account.getActive());
 
-                                if(account.getActive() == 0) {
-                                    System.out.println("This account is approved to make transactions. Please have an employee approve this account before you " +
+                                if(account.getActive().equals("Rejected")) {
+                                    System.out.println("This account is not approved to make transactions. Please have an employee approve this account before you " +
                                             "attempt to make any transactions with it.");
                                 }
                                 break;
@@ -125,9 +125,9 @@ public class ZeppBank {
                                 //gets the account information based on its id and the customers id
                                 Account account = accountDAO.getAccountById(accountNumber, customerId);
                                 double balance = account.getBalance();
-                                int active = account.getActive();
+                                String active = account.getActive();
                                 //checks to see if the account is active and can make transactions
-                                if (active == 0) {
+                                if (active.equals("Rejected")) {
                                     System.out.println("This account is not approved to make transactions," +
                                             "please select an approved account");
                                 } else {
@@ -163,8 +163,8 @@ public class ZeppBank {
                                 System.out.println("Please enter the id of the account you would like to deposit to");
                                 int accountNumber = scan.nextInt();
                                 Account account = accountDAO.getAccountById(accountNumber, customerId);
-                                int active = account.getActive();
-                                if (active == 0) {
+                                String active = account.getActive();
+                                if (active.equals("Rejected")) {
                                     System.out.println("This account is not approved to make transactions," +
                                             "please select an approved account");
                                 } else {
@@ -198,7 +198,7 @@ public class ZeppBank {
                                 Account firstAccount = new Account();
                                 firstAccount.setAccountNumber(firstId);
                                 accountDAO.getInfoForTransfer(firstAccount);
-                                if (firstAccount.getActive() == 0) {
+                                if (firstAccount.getActive().equals("Rejected")) {
                                     System.out.println("This account is not approved to make transactions," +
                                             "please select an approved account");
                                 } else {
@@ -207,7 +207,7 @@ public class ZeppBank {
                                     Account secondAccount = new Account();
                                     secondAccount.setAccountNumber(secondId);
                                     accountDAO.getInfoForTransfer(secondAccount);
-                                    if (secondAccount.getActive() == 0) {
+                                    if (secondAccount.getActive().equals("Rejected")) {
                                         System.out.println("This account is not approved to make transactions," +
                                                 "please select an approved account");
                                     }else{
@@ -223,6 +223,7 @@ public class ZeppBank {
                             case 7: {
                                 System.out.println("Goodbye.");
                                 loggedIn = false;
+                                break;
                             }
                             default: {
                                 System.out.println("That is not a valid option. Please enter a valid selection.");

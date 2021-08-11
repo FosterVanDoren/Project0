@@ -22,7 +22,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
     @Override
     public void approveAccount(Account account) throws SQLException {
-        String sql = "update accounts set active_status = 1 where account_id = ?";
+        String sql = "update accounts set active_status = 'Approved' where account_id = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
         preparedStatement.setInt(1, account.getAccountNumber());
 
@@ -36,7 +36,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
     @Override
     public void rejectAccount(Account account) throws SQLException {
-        String sql = "update accounts set active_status = 0 where account_id = ?";
+        String sql = "update accounts set active_status = 'Rejected' where account_id = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
         preparedStatement.setInt(1, account.getAccountNumber());
 

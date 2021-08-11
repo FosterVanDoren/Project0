@@ -30,7 +30,7 @@ public class AccountDAOImpl implements AccountDAO {
             double balance = resultSet.getDouble(3);
             int custId = resultSet.getInt(4);
             Date date = resultSet.getDate(5);
-            int active = resultSet.getInt(6);
+            String active = resultSet.getString(6);
             account.setAccountNumber(accountId);
             account.setAccountType(accountType);
             account.setBalance(balance);
@@ -57,7 +57,7 @@ public class AccountDAOImpl implements AccountDAO {
             double balance = resultSet.getDouble(3);
             int custID = resultSet.getInt(4);
             Date dateOpened = resultSet.getDate(5);
-            int active = resultSet.getInt(6);
+            String active = resultSet.getString(6);
             account.setAccountNumber(id);
             account.setAccountType(accountType);
             account.setBalance(balance);
@@ -120,7 +120,7 @@ public class AccountDAOImpl implements AccountDAO {
             double balance = resultSet.getDouble(3);
             int custId = resultSet.getInt(4);
             Date date = resultSet.getDate(5);
-            int active = resultSet.getInt(6);
+            String active = resultSet.getString(6);
             account.setAccountNumber(accountId);
             account.setAccountType(accountType);
             account.setBalance(balance);
@@ -132,7 +132,10 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public void transfer(Account firstAccount, Account secondAccount) {
+    public void transfer(Account firstAccount, Account secondAccount) throws SQLException {
+        String transaction = "start transaction";
+        PreparedStatement transactionStart = conn.prepareStatement(transaction);
+        transactionStart.executeQuery();
 
     }
 

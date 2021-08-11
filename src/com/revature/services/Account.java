@@ -8,7 +8,7 @@ public class Account {
     protected String accountType;
     protected double balance;
     protected Date openingDate;
-    protected int active;
+    protected String active;
 
     public Account() {
 
@@ -54,11 +54,11 @@ public class Account {
         this.openingDate = openingDate;
     }
 
-    public int getActive() {
+    public String getActive() {
         return active;
     }
 
-    public void setActive(int active) {
+    public void setActive(String active) {
         this.active = active;
     }
 
