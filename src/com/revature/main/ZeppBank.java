@@ -141,7 +141,7 @@ public class ZeppBank {
                                 //checks to see if the account is active and can make transactions
                                 if (active.equals("Rejected")) {
                                     System.out.println("This account is not approved to make transactions," +
-                                            "please select an approved account");
+                                            " please select an approved account");
 //                                    logger.info("Withdrawal on account " + accountNumber + " failed");
                                 } else if (active.equals("Pending")) {
                                     System.out.println("Account is currently waiting on a pending transfer. Please wait for the transfer to complete.");
