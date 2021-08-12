@@ -184,14 +184,14 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void updateTransfer() throws SQLException {
-        String sql = "update accounts set active_status = 'Approved', pending_transaction = 0";
+        String sql = "update accounts set active_status = 'Approved', pending_transaction = 0 where active_status = 'Pending'";
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
         int count = preparedStatement.executeUpdate();
-        if (count > 0)
-            System.out.println("Transfer cancelled.");
-        else
-            System.out.println("Something went wrong, please try again.");
+//        if (count > 0)
+//            System.out.println("Transfer cancelled.");
+//        else
+//            System.out.println("Something went wrong, please try again.");
     }
 
     @Override

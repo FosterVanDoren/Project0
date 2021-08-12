@@ -21,7 +21,7 @@ import java.util.Scanner;
 
 public class ZeppBank {
 
-    private static final Logger logger = LogManager.getLogger(ZeppBank.class);
+//    private static final Logger logger = LogManager.getLogger(ZeppBank.class);
 
 
     public static void main(String[] args) throws SQLException {
@@ -54,7 +54,7 @@ public class ZeppBank {
                     that is tied to that specific user from the users table
                  */
                 userDAO.login(user);
-                logger.info("User " + user.getFirstName() + user.getLastName() + " logged in");
+//                logger.info("User " + user.getFirstName() + user.getLastName() + " logged in");
                 System.out.println("Welcome " + user.getFirstName() + " " + user.getLastName());
 
                 boolean loggedIn = true;
@@ -99,7 +99,7 @@ public class ZeppBank {
                                     System.out.println("This account is not approved to make transactions. Please have an employee approve this account before you " +
                                             "attempt to make any transactions with it.");
                                 }
-                                logger.info("Account " + account.getAccountNumber() + " balance viewed.");
+//                                logger.info("Account " + account.getAccountNumber() + " balance viewed.");
                                 break;
                             }
                             case 2: {
@@ -127,7 +127,7 @@ public class ZeppBank {
                                 createdAccount.setBalance(startingAmount);
                                 createdAccount.setOwnerID(custId);
                                 customerDAO.createNewAccount(createdAccount);
-                                logger.info("New " + createdAccount.getAccountType() +" account created.");
+//                                logger.info("New " + createdAccount.getAccountType() +" account created.");
                                 break;
                             }
                             case 3: {
@@ -142,16 +142,16 @@ public class ZeppBank {
                                 if (active.equals("Rejected")) {
                                     System.out.println("This account is not approved to make transactions," +
                                             "please select an approved account");
-                                    logger.info("Withdrawal on account " + accountNumber + " failed");
+//                                    logger.info("Withdrawal on account " + accountNumber + " failed");
                                 } else if (active.equals("Pending")) {
                                     System.out.println("Account is currently waiting on a pending transfer. Please wait for the transfer to complete.");
-                                    logger.info("Withdrawal on account " + accountNumber + " failed due to pending transfer");
+//                                    logger.info("Withdrawal on account " + accountNumber + " failed due to pending transfer");
                                 } else {
                                     System.out.println("Please enter the amount of money you would like to withdraw.");
                                     double amount = scan.nextDouble();
 
                                     accountDAO.withdraw(accountNumber, amount, balance);
-                                    logger.info("Withdrew " + amount + " from account " + accountNumber);
+//                                    logger.info("Withdrew " + amount + " from account " + accountNumber);
                                     System.out.println("Would you like to make another withdrawal?");
                                     String confirm = scan.next();
                                     /*
@@ -165,7 +165,7 @@ public class ZeppBank {
                                         amount = scan.nextDouble();
                                         balance = account.getBalance();
                                         accountDAO.withdraw(accountNumber, amount, balance);
-                                        logger.info("Withdrew " + amount + " from account " + accountNumber);
+//                                        logger.info("Withdrew " + amount + " from account " + accountNumber);
 
                                     } else if (confirm.equalsIgnoreCase("no") || confirm.equalsIgnoreCase("n"))
                                         System.out.println("Returning to menu...");
@@ -173,8 +173,8 @@ public class ZeppBank {
                                         System.out.println("I don't understand that, please try again.");
                                         confirm = scan.next();
                                     }
-                                    break;
                                 }
+                                break;
                             }
                             case 4: {
                                 //same as the withdrawal case, except for deposits
@@ -185,16 +185,16 @@ public class ZeppBank {
                                 if (active.equals("Rejected")) {
                                     System.out.println("This account is not approved to make transactions," +
                                             "please select an approved account");
-                                    logger.info("Deposit on account " + accountNumber + " failed");
+//                                    logger.info("Deposit on account " + accountNumber + " failed");
                                 } else if (active.equals("Pending")) {
                                     System.out.println("Account is currently waiting on a pending transfer. Please wait for the transfer to complete.");
-                                    logger.info("Deposit on account " + accountNumber + " failed due to pending transfer");
+//                                    logger.info("Deposit on account " + accountNumber + " failed due to pending transfer");
                                 } else {
                                     System.out.println("Please enter the amount of money you would like to deposit.");
                                     double amount = scan.nextDouble();
 
                                     accountDAO.deposit(accountNumber, amount);
-                                    logger.info("Deposited + " + amount + " from account " + accountNumber);
+//                                    logger.info("Deposited + " + amount + " from account " + accountNumber);
                                     System.out.println("Would you like to make another deposit?");
                                     String confirm = scan.next();
                                     if (confirm.equalsIgnoreCase("yes") || confirm.equalsIgnoreCase("y")) {
@@ -204,7 +204,7 @@ public class ZeppBank {
                                         amount = scan.nextDouble();
 
                                         accountDAO.deposit(accountNumber, amount);
-                                        logger.info("Deposited + " + amount + " from account " + accountNumber);
+//                                        logger.info("Deposited + " + amount + " from account " + accountNumber);
 
                                     } else if (confirm.equalsIgnoreCase("no") || confirm.equalsIgnoreCase("n"))
                                         System.out.println("Returning to menu...");
@@ -231,10 +231,10 @@ public class ZeppBank {
                                 if (firstAccount.getActive().equals("Rejected")) {
                                     System.out.println("This account is not approved to make transactions," +
                                             "please select an approved account");
-                                    logger.info("Transfer request failed to post.");
+//                                    logger.info("Transfer request failed to post.");
                                 } else if (firstAccount.getActive().equals("Pending")) {
                                     System.out.println("Account is currently waiting on a pending transfer. Please wait for the transfer to complete.");
-                                    logger.info("Transfer request failed to post due to another transfer being present.");
+//                                    logger.info("Transfer request failed to post due to another transfer being present.");
                                 } else {
                                     System.out.println("Please enter the amount of money you would like to transfer");
                                     /*
@@ -246,14 +246,14 @@ public class ZeppBank {
                                     if (amount > firstAccount.getBalance()) {
                                         System.out.println("The account you have selected to transfer from does not have the funds to" +
                                                 "complete this transfer. Please deposit more money first.");
-                                        logger.info("Transfer request failed to post due to lack of funds.");
+//                                        logger.info("Transfer request failed to post due to lack of funds.");
                                     } else if (amount < 0) {
                                         System.out.println("Invalid amount. please enter a valid amount");
-                                        logger.info("Transfer request failed to post due to invalid amount.");
+//                                        logger.info("Transfer request failed to post due to invalid amount.");
                                     } else {
                                         //updates the status of the account to pending to prepare it for a transfer
                                         accountDAO.transfer(firstAccount, amount);
-                                        logger.info("Transfer of $" + amount + " successfully posted for account " + firstAccount.getAccountNumber());
+//                                        logger.info("Transfer of $" + amount + " successfully posted for account " + firstAccount.getAccountNumber());
                                         System.out.println("Please enter the account id you wish to transfer to");
                                         //same as above, but for the second account
                                         int secondId = scan.nextInt();
@@ -263,17 +263,17 @@ public class ZeppBank {
                                         if (secondAccount.getActive().equals("Rejected")) {
                                             System.out.println("This account is not approved to make transactions," +
                                                     "please select an approved account");
-                                            logger.info("Transfer request failed to post.");
+//                                            logger.info("Transfer request failed to post.");
                                         } else if (secondAccount.getActive().equals("Pending")) {
                                             System.out.println("Account is currently waiting on a pending transfer. Please wait for the transfer to complete.");
-                                            logger.info("Transfer request failed to post due to another transfer being present.");
+//                                            logger.info("Transfer request failed to post due to another transfer being present.");
                                         } else {
                                             accountDAO.transfer(secondAccount, amount);
-                                            logger.info("Transfer of $" + amount + " successfully posted for account " + secondAccount.getAccountNumber());
+//                                            logger.info("Transfer of $" + amount + " successfully posted for account " + secondAccount.getAccountNumber());
                                         }
-                                        break;
                                     }
                                 }
+                                break;
                             }
                             case 6: {
                                 /*
@@ -293,7 +293,8 @@ public class ZeppBank {
                                 String confirm = scan.next();
                                 if (confirm.equalsIgnoreCase("no") || confirm.equalsIgnoreCase("n")) {
                                     accountDAO.updateTransfer();
-                                    logger.info("Transfer declined.");
+                                    System.out.println("Transfer cancelled.");
+//                                    logger.info("Transfer declined.");
                                 } else if (confirm.equalsIgnoreCase("yes") || confirm.equalsIgnoreCase("y")) {
                                     /*
                                         in order to obtain the account information to be used in the transfer,
@@ -318,7 +319,7 @@ public class ZeppBank {
                                         accountDAO.getInfoForTransfer(secondAccount);
                                         accountDAO.deposit(secondId, amount);
                                         accountDAO.updateTransfer();
-                                        logger.info("Transfer complete");
+//                                        logger.info("Transfer complete");
                                     }
                                 } else {
                                     System.out.println("I don't understand that, please try again");
