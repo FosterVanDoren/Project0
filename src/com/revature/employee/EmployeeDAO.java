@@ -10,4 +10,5 @@ public interface EmployeeDAO {
     void approveAccount(Account account) throws SQLException;
     void rejectAccount(Account account) throws SQLException;
     List<Account> viewAccounts(int customerID) throws SQLException;
+    void viewTransactions();
 }

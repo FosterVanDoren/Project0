@@ -4,6 +4,8 @@ package com.revature.employee;
 import com.revature.services.Account;
 import com.revature.util.ConnectionFactory;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,6 +71,20 @@ public class EmployeeDAOImpl implements EmployeeDAO{
             accounts.add(account);
         }
         return accounts;
+    }
+
+    @Override
+    public void viewTransactions() {
+        try{
+        FileInputStream fin = new FileInputStream("transactionLog.properties");
+            int i = 0;
+            while ((i = fin.read()) != 1) {
+                System.out.println((char)i);
+            }
+        }catch(IOException e){
+            System.out.println(e);
+        }
+
     }
 
 

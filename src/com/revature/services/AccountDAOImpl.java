@@ -1,9 +1,12 @@
 package com.revature.services;
 
 
+import com.revature.customer.Customer;
 import com.revature.util.ConnectionFactory;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AccountDAOImpl implements AccountDAO {
@@ -31,12 +34,14 @@ public class AccountDAOImpl implements AccountDAO {
             int custId = resultSet.getInt(4);
             Date date = resultSet.getDate(5);
             String active = resultSet.getString(6);
+            double pending = resultSet.getDouble(7);
             account.setAccountNumber(accountId);
             account.setAccountType(accountType);
             account.setBalance(balance);
             account.setOwnerID(custId);
             account.setOpeningDate(date);
             account.setActive(active);
+            account.setPendingTransaction(pending);
         }
         return account;
 
@@ -58,12 +63,14 @@ public class AccountDAOImpl implements AccountDAO {
             int custID = resultSet.getInt(4);
             Date dateOpened = resultSet.getDate(5);
             String active = resultSet.getString(6);
+            double pending = resultSet.getDouble(7);
             account.setAccountNumber(id);
             account.setAccountType(accountType);
             account.setBalance(balance);
             account.setOwnerID(custID);
             account.setOpeningDate(dateOpened);
             account.setActive(active);
+            account.setPendingTransaction(pending);
         } else {
             System.out.println("There is no account with that ID");
         }
@@ -121,26 +128,83 @@ public class AccountDAOImpl implements AccountDAO {
             int custId = resultSet.getInt(4);
             Date date = resultSet.getDate(5);
             String active = resultSet.getString(6);
+            double pending = resultSet.getDouble(7);
             account.setAccountNumber(accountId);
             account.setAccountType(accountType);
             account.setBalance(balance);
             account.setOwnerID(custId);
             account.setOpeningDate(date);
             account.setActive(active);
+            account.setPendingTransaction(pending);
         }
         return account;
     }
 
     @Override
-    public void transfer(Account firstAccount, Account secondAccount) throws SQLException {
-        String transaction = "start transaction";
-        PreparedStatement transactionStart = conn.prepareStatement(transaction);
-        transactionStart.executeQuery();
+    public void transfer(Account account, double amount) throws SQLException {
+       String sql = "update accounts set active_status = 'Pending', pending_transaction = " + amount + " where account_id = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1, account.getAccountNumber());
+
+        int count = preparedStatement.executeUpdate();
+        if (count > 0)
+            System.out.println("Transfer is pending. Waiting for account to accept transfer...");
+        else
+            System.out.println("Something went wrong, please try again.");
 
     }
 
     @Override
-    public void acceptTransfer(Account account) {
+    public List<Account> getPendingTransfers(Customer customer) throws SQLException {
+        List<Account> pendingTransfers = new ArrayList<>();
+        String sql = "select * from accounts where active_status = 'Pending' and cust_id = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1, customer.getCustID());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while(resultSet.next()){
+            Account account = new Account();
+            int accountId = resultSet.getInt(1);
+            String accountType = resultSet.getString(2);
+            double balance = resultSet.getDouble(3);
+            int custId = resultSet.getInt(4);
+            Date date = resultSet.getDate(5);
+            String active = resultSet.getString(6);
+            double pending = resultSet.getDouble(7);
+            account.setAccountNumber(accountId);
+            account.setAccountType(accountType);
+            account.setBalance(balance);
+            account.setOwnerID(custId);
+            account.setOpeningDate(date);
+            account.setActive(active);
+            account.setPendingTransaction(pending);
+            pendingTransfers.add(account);
+        }
+        return pendingTransfers;
+    }
+
+    @Override
+    public void updateTransfer() throws SQLException {
+        String sql = "update accounts set active_status = 'Approved', pending_transaction = 0";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+        int count = preparedStatement.executeUpdate();
+        if (count > 0)
+            System.out.println("Transfer cancelled.");
+        else
+            System.out.println("Something went wrong, please try again.");
+    }
+
+    @Override
+    public void acceptTransfer(Account account) throws SQLException {
+        String sql = "update accounts set active_status = 'Approved', pending_transaction = 0  where account_id = ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1, account.getAccountNumber());
+
+        int count = preparedStatement.executeUpdate();
+        if (count > 0)
+            System.out.println("Transfer completed successfully.");
+        else
+            System.out.println("Something went wrong, please try again.");
 
     }
 }

@@ -9,6 +9,7 @@ public class Account {
     protected double balance;
     protected Date openingDate;
     protected String active;
+    protected  double pendingTransaction;
 
     public Account() {
 
@@ -62,6 +63,14 @@ public class Account {
         this.active = active;
     }
 
+    public double getPendingTransaction() {
+        return pendingTransaction;
+    }
+
+    public void setPendingTransaction(double pendingTransaction) {
+        this.pendingTransaction = pendingTransaction;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
@@ -70,7 +79,8 @@ public class Account {
                 ", accountType='" + accountType + '\'' +
                 ", balance=" + balance +
                 ", openingDate=" + openingDate +
-                ", active=" + active +
+                ", active='" + active + '\'' +
+                ", pendingTransaction=" + pendingTransaction +
                 '}';
     }
 }
