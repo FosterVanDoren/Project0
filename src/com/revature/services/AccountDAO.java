@@ -13,7 +13,7 @@ public interface AccountDAO {
     void deposit(int accountId, double amount) throws SQLException;
     Account getInfoForTransfer(Account account) throws SQLException;
     void transfer(Account account, double amount) throws SQLException;
-    List<Account> getPendingTransfers(Customer customer) throws SQLException;
+    List<Account> getPendingTransfers() throws SQLException;
     void updateTransfer() throws SQLException;
     void acceptTransfer(Account account) throws SQLException;
 }

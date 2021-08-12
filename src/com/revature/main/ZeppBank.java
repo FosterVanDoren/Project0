@@ -281,7 +281,7 @@ public class ZeppBank {
                                     currently have a pending transaction
                                  */
                                 System.out.println("These are the accounts you own that currently have a pending transfer");
-                                List<Account> pendingTransfers = accountDAO.getPendingTransfers(customer);
+                                List<Account> pendingTransfers = accountDAO.getPendingTransfers();
                                 for (Account pending : pendingTransfers) {
                                     System.out.println(pending);
                                 }

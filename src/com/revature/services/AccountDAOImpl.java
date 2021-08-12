@@ -155,11 +155,10 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public List<Account> getPendingTransfers(Customer customer) throws SQLException {
+    public List<Account> getPendingTransfers() throws SQLException {
         List<Account> pendingTransfers = new ArrayList<>();
-        String sql = "select * from accounts where active_status = 'Pending' and cust_id = ?";
+        String sql = "select * from accounts where active_status = 'Pending'";
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
-        preparedStatement.setInt(1, customer.getCustID());
         ResultSet resultSet = preparedStatement.executeQuery();
         while(resultSet.next()){
             Account account = new Account();
